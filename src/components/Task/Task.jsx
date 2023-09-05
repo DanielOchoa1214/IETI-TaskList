@@ -1,16 +1,21 @@
+import { useState } from "react";
+
 export function Task(props) {
 
-    var { name , state } = props;
+    let { name , state, onCompleatedClick } = props;
 
-    const handleCheckTaskClick = () => {
+    const onCompleatedTaskClick = () => {
         state = !state;
-    };
+        onCompleatedClick(name, state);
+    }
+
+    console.log(name + " DESDE TASK: " + state)
 
     return (
         <li>
             <label htmlFor={name}>
                 {name}
-                <input type="checkbox" defaultChecked={state} name={name} onClick={handleCheckTaskClick}/>
+                <input type="checkbox" checked={state} name={name} onChange={onCompleatedTaskClick}/>
             </label>
         </li>
     );
