@@ -32,7 +32,7 @@ export function TaskList(props){
                     name={ task.name } 
                     onCompleatedClick={handleCompleatedChange}
                     state={ setInitialState(task) } 
-                    />
+                />
             ))}
         </ul>
     );

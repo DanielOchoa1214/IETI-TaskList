@@ -9,8 +9,6 @@ export function Task(props) {
         onCompleatedClick(name, state);
     }
 
-    console.log(name + " DESDE TASK: " + state)
-
     return (
         <li>
             <label htmlFor={name}>
