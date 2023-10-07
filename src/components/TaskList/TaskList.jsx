@@ -1,39 +1,42 @@
 import { useEffect, useState } from "react";
 import { Task } from "../Task/Task";
+import { useTasks } from "../../hooks/useTasks";
 
-export function TaskList(props){
-    const { list } = props;
-    const [savedTasks, setSaved] = useState({});
+export function TaskList(){
+    const [tasks, createTask, deleteTask, updateTask] = useTasks();
 
-    const handleCompleatedChange = (name, state) => {
-        let compleatedTasks = {...savedTasks};
-        compleatedTasks[`${name}`] = {"compleated": state};
-        setSaved(compleatedTasks);
-        localStorage.setItem("tasks", JSON.stringify(compleatedTasks));
-    };
-
-    const setInitialState = (task) => {
-        if(savedTasks[`${task.name}`] && JSON.stringify(savedTasks) !== "{}"){
-            return savedTasks[`${task.name}`]["compleated"];
+    const handleCreateTask = () => {
+        let newName = prompt("Enter the name of the new task: ")
+        let newTask = {
+            name: newName
         }
-        return task.state
+        createTask(newTask);
     };
 
-    useEffect(() => {
-        const compleatedTasks = JSON.parse(localStorage.getItem("tasks"));
-        if (compleatedTasks !== null) setSaved(compleatedTasks);
-    }, []);
+    let handleUpdateTask = (task) => {
+        let newName = prompt("Enter the new name of the task: ");
+        task.name = newName;
+        updateTask(task);
+    };
+
+    let handleDeleteTask = (task) => {
+        deleteTask(task)
+    };
 
     return (
-        <ul>
-            {list.map((task) => (
-                <Task 
-                    key={ task.name } 
-                    name={ task.name } 
-                    onCompleatedClick={handleCompleatedChange}
-                    state={ setInitialState(task) } 
-                />
-            ))}
-        </ul>
+        <>
+            <button onClick={handleCreateTask}>Add</button>
+            <ul>
+                {tasks.map((task) => (
+                    <Task 
+                        key={ task.id } 
+                        task={ task }
+                        onUpdate={handleUpdateTask}
+                        onDelete={handleDeleteTask}
+                    />
+                ))}
+            </ul>
+        </>
+        
     );
 }
