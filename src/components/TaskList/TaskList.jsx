@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import { Task } from "../Task/Task";
 import { useTasks } from "../../hooks/useTasks";
+import { TaskForm } from "../TaskForm/TaskForm";
 
 export function TaskList(){
     const [tasks, createTask, deleteTask, updateTask] = useTasks();
+    let [isAdding, setAdding] = useState(false);
 
-    const handleCreateTask = () => {
-        let newName = prompt("Enter the name of the new task: ")
-        let newTask = {
-            name: newName
-        }
+    const handleCreateTask = (newTask) => {
         createTask(newTask);
+        setAdding(false);
+    };
+
+    let openForm = () => {
+        setAdding(true);
     };
 
     let handleUpdateTask = (task) => {
-        let newName = prompt("Enter the new name of the task: ");
-        task.name = newName;
+        let newDescription = prompt("Enter the new description of the task: ");
+        task.description = newDescription;
         updateTask(task);
     };
 
@@ -23,9 +26,14 @@ export function TaskList(){
         deleteTask(task)
     };
 
+    let checkTask = (task) => {
+        updateTask(task);
+    }
+
     return (
         <>
-            <button onClick={handleCreateTask}>Add</button>
+            <button onClick={openForm}>Add</button>
+            {isAdding && (<TaskForm onCreate={handleCreateTask}/>)}
             <ul>
                 {tasks.map((task) => (
                     <Task 
@@ -33,6 +41,7 @@ export function TaskList(){
                         task={ task }
                         onUpdate={handleUpdateTask}
                         onDelete={handleDeleteTask}
+                        onCheck={checkTask}
                     />
                 ))}
             </ul>
