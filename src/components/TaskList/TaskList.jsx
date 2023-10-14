@@ -23,6 +23,10 @@ export function TaskList(){
         deleteTask(task)
     };
 
+    let checkTask = (task) => {
+        updateTask(task);
+    };
+
     return (
         <>
             <button onClick={handleCreateTask}>Add</button>
@@ -33,6 +37,7 @@ export function TaskList(){
                         task={ task }
                         onUpdate={handleUpdateTask}
                         onDelete={handleDeleteTask}
+                        onCheck={checkTask}
                     />
                 ))}
             </ul>

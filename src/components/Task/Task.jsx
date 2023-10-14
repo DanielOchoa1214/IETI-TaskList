@@ -2,11 +2,11 @@ import { useState } from "react";
 
 export function Task(props) {
 
-    let { task, onUpdate, onDelete } = props;
+    let { task, onUpdate, onDelete, onCheck } = props;
 
     const onCompleatedTaskClick = () => {
         task.state = !task.state;
-        onUpdate(task);
+        onCheck(task);
     };
 
     return (
