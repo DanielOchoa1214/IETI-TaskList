@@ -32,19 +32,19 @@ export function TaskList(){
 
     return (
         <>
-            <button onClick={openForm}>Add</button>
-            {isAdding && (<TaskForm onCreate={handleCreateTask}/>)}
             <ul>
                 {tasks.map((task) => (
                     <Task 
-                        key={ task.id } 
-                        task={ task }
-                        onUpdate={handleUpdateTask}
-                        onDelete={handleDeleteTask}
-                        onCheck={checkTask}
+                    key={ task.id } 
+                    task={ task }
+                    onUpdate={handleUpdateTask}
+                    onDelete={handleDeleteTask}
+                    onCheck={checkTask}
                     />
-                ))}
+                    ))}
             </ul>
+            <button onClick={openForm}>Add</button>
+            {isAdding && (<TaskForm onCreate={handleCreateTask}/>)}
         </>
         
     );
