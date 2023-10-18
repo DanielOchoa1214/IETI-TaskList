@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Task } from "../Task/Task";
 import { useTasks } from "../../hooks/useTasks";
 import { TaskForm } from "../TaskForm/TaskForm";
+import { Button, UnorderedList, Box, Center } from "@chakra-ui/react";
 
-export function TaskList(){
+export function TaskList() {
     const [tasks, createTask, deleteTask, updateTask] = useTasks();
     let [isAdding, setAdding] = useState(false);
 
@@ -32,20 +33,24 @@ export function TaskList(){
 
     return (
         <>
-            <ul>
-                {tasks.map((task) => (
-                    <Task 
-                    key={ task.id } 
-                    task={ task }
-                    onUpdate={handleUpdateTask}
-                    onDelete={handleDeleteTask}
-                    onCheck={checkTask}
-                    />
+            <Box>
+                <UnorderedList listStyleType={"none"}>
+                    {tasks.map((task) => (
+                        <Task
+                            key={task.id}
+                            task={task}
+                            onUpdate={handleUpdateTask}
+                            onDelete={handleDeleteTask}
+                            onCheck={checkTask}
+                        />
                     ))}
-            </ul>
-            <button onClick={openForm}>Add</button>
-            {isAdding && (<TaskForm onCreate={handleCreateTask}/>)}
+                </UnorderedList>
+                <Center>
+                    <Button onClick={openForm}>Add</Button>
+                </Center>
+                {isAdding && (<TaskForm onCreate={handleCreateTask} />)}
+            </Box>
         </>
-        
+
     );
 }
